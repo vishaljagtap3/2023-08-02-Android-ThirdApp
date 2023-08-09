@@ -1,5 +1,6 @@
 package com.bitcodetech.thirdapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
             intentUserActivity.putExtra("name", edtUsername.getText().toString());
             intentUserActivity.putExtra("id", 109089);
 
-            startActivity(intentUserActivity);
+            //startActivity(intentUserActivity);
+            startActivityForResult(intentUserActivity, 1);
         }
     }
 
@@ -49,5 +51,19 @@ public class MainActivity extends AppCompatActivity {
         imgUser = findViewById(R.id.imgUser);
         edtUsername = findViewById(R.id.edtUsername);
         btnStart = findViewById(R.id.btnStart);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(data == null) {
+            return;
+        }
+
+        String textResult = data.getStringExtra("result_text");
+        int imageId = data.getIntExtra("result_image_id", R.mipmap.ic_launcher);
+        imgUser.setImageResource(imageId);
+        txtUsername.setText(textResult);
     }
 }
